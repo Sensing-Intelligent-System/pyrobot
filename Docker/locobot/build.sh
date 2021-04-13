@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build --rm -t argnctu/sis:locobot .
+docker build --rm -t argsis/sis:locobot .
