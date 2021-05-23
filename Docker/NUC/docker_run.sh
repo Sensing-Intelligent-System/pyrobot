@@ -81,5 +81,5 @@ docker run \
     --privileged \
     --security-opt seccomp=unconfined \
     $DOCKER_OPTS \
-    argsis/sis:locobot \
+    argsis/locobot:NUC \
     $BASH_OPTION
