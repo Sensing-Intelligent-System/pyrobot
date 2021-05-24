@@ -23,7 +23,11 @@ RUN adduser --disabled-password \
 RUN echo "root:root" | chpasswd
 RUN echo "${USER}:111111" | chpasswd
 
-Run apt-get update && apt-get install -y curl lsb-release sudo software-properties-common
+Run apt-get update && apt-get install -y \
+    curl \
+    lsb-release \
+    sudo \
+    software-properties-common 
 
 ##################################### setting #####################################
 RUN chown -R ${USER}:${USER} ${HOME}/
@@ -42,7 +46,9 @@ WORKDIR ${HOME}
 
 RUN curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/master/robots/LoCoBot/install/locobot_install_all.sh' > locobot_install_all.sh && chmod +x locobot_install_all.sh
 
-RUN ./locobot_install_all.sh -t full -p 2 -l interbotix
+RUN chmod +x locobot_install_all.sh
+
+RUN ./locobot_install_all.sh -t full -p 3 -l interbotix
 
 RUN rm locobot_install_all.sh
 
