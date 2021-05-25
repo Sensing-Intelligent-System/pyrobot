@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM osrf/ros:melodic-desktop-full
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
@@ -27,7 +27,26 @@ Run apt-get update && apt-get install -y \
     curl \
     lsb-release \
     sudo \
-    software-properties-common 
+    software-properties-common \
+    git \
+    cmake \
+    make \
+    vim \
+    build-essential \
+    libblkid-dev \
+    e2fslibs-dev \
+    libboost-all-dev \
+    libaudit-dev
+
+#################################### GTSAM ####################################
+
+RUN cd ${HOME}/ \
+    && git clone https://github.com/borglab/gtsam.git \
+    && cd gtsam/ \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && make install
 
 ##################################### setting #####################################
 RUN chown -R ${USER}:${USER} ${HOME}/
@@ -44,12 +63,11 @@ WORKDIR ${HOME}
 
 ############################# LoCoBot and PyRobot ############################
 
-RUN curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/master/robots/LoCoBot/install/locobot_install_all.sh' > locobot_install_all.sh && chmod +x locobot_install_all.sh
+RUN cd ${HOME}/
 
-RUN chmod +x locobot_install_all.sh
+RUN curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/master/robots/LoCoBot/install/locobot_install_all.sh' > locobot_install_all.sh && chmod +x locobot_install_all.sh
 
 RUN ./locobot_install_all.sh -t full -p 3 -l interbotix
 
 RUN rm locobot_install_all.sh
 
-RUN pip install gtsam     

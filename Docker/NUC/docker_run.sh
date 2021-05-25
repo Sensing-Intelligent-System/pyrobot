@@ -50,18 +50,6 @@ if [ ! -z "$2" ]; then
 fi
 
 BASH_OPTION=bash
-# if [ ! -z "$3" ]; then
-#     if [ $3 = "husky1" ]; then
-#         BASH_OPTION="bash -c ~/subt-system/scripts/husky1_gui.sh"
-#     fi
-#     if [ $3 = "husky2" ]; then
-#         BASH_OPTION="bash -c ~/subt-system/scripts/husky2_gui.sh"
-#     fi
-#     if [ $3 = "df_gui" ]; then
-#         BASH_OPTION="bash -c ~/subt-system/scripts/df_gui.sh"
-#     fi
-#     echo "run $3"
-# fi
 
 docker run \
     -it \
@@ -74,6 +62,7 @@ docker run \
     -v "$XAUTH:$XAUTH" \
     -v "/tmp/.X11-unix:/tmp/.X11-unix" \
     -v "/etc/localtime:/etc/localtime:ro" \
+    -v "/etc/ssh/ssh_config:/etc/ssh/ssh_config" \
     -v "/dev:/dev" \
     -v "/var/run/docker.sock:/var/run/docker.sock" \
     --name locobot \
