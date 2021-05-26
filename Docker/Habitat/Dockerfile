@@ -15,6 +15,7 @@ ENV SHELL=/bin/bash \
 
 ENV HOME=/home/${USER}
 
+
 RUN adduser --disabled-password \
     --gecos "Default user" \
     --uid ${UID} \
@@ -70,9 +71,22 @@ RUN sudo apt-get install -y libjpeg-dev \
     libegl1-mesa-dev \
     mesa-utils \
     xorg-dev \
-    freeglut3-dev
+    freeglut3-dev \
+    libssl-dev
 
 RUN /bin/bash -c "source ${HOME}/pyenv_pyrobot_python3/bin/activate && cd ${HOME}/habitat-sim/ && sudo python3 setup.py build_ext --parallel 3 install"
 
-RUN mv ${HOME}/pyrobot_catkin_ws/src/* ${HOME}/low_cost_ws/src
-RUN rm -rf ${HOME}/pyrobot_catkin_ws && rm -r ${HOME}/low_cost_ws/devel ${HOME}/low_cost_ws/build
+RUN /bin/bash -c "source ${HOME}/pyenv_pyrobot_python3/bin/activate" && sudo apt install python3-netifaces && sudo pip3 install netifaces
+
+RUN mv ${HOME}/pyrobot_catkin_ws/src/* ${HOME}/low_cost_ws/src && rm -rf ${HOME}/pyrobot_catkin_ws && rm -r ${HOME}/low_cost_ws/devel ${HOME}/low_cost_ws/build
+
+
+# ENV ORBSLAM2_LIBRARY_PATH = /home/${USER}/low_cost_ws/src/pyrobot/robots/LoCoBot/locobot_navigation/orb_slam2_ros/
+# RUN /bin/bash -c "source ${HOME}/pyenv_pyrobot_python3/bin/activate && source /opt/ros/melodic/setup.bash && \
+#     cd ${HOME}/low_cost_ws && \
+#     catkin_make --cmake-args -DPYTHON_EXECUTABLE=$(which python) -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so"
+
+# RUN echo "source ${HOME}/catkin_ws/devel/setup.bash" >> ~/.bashrc
+
+
+
