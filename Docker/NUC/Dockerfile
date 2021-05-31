@@ -23,6 +23,12 @@ RUN adduser --disabled-password \
 RUN echo "root:root" | chpasswd
 RUN echo "${USER}:111111" | chpasswd
 
+###################################### ROS #####################################
+
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
 RUN apt-get update && apt-get install -y \
     curl \
     lsb-release \
@@ -37,6 +43,13 @@ RUN apt-get update && apt-get install -y \
     e2fslibs-dev \
     libboost-all-dev \
     libaudit-dev
+
+RUN apt-get update && apt-get install -y \
+    ros-melodic-smach \
+    ros-melodic-smach-msgs \
+    ros-melodic-smach-ros \
+    ros-melodic-executive-smach \
+    ros-melodic-smach-viewer
 
 #################################### GTSAM ####################################
 
@@ -70,11 +83,3 @@ RUN curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/master/robo
 RUN ./locobot_install_all.sh -t full -p 2 -l interbotix
 
 RUN rm locobot_install_all.sh
-
-RUN apt-get update && apt-get install -y \
-    ros-melodic-smach \
-    ros-melodic-smach-msgs \
-    ros-melodic-smach-ros \
-    ros-melodic-executive-smach \
-    ros-melodic-smach-viewer
-
