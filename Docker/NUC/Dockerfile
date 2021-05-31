@@ -23,7 +23,7 @@ RUN adduser --disabled-password \
 RUN echo "root:root" | chpasswd
 RUN echo "${USER}:111111" | chpasswd
 
-Run apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     curl \
     lsb-release \
     sudo \
@@ -67,7 +67,14 @@ RUN cd ${HOME}/
 
 RUN curl 'https://raw.githubusercontent.com/facebookresearch/pyrobot/master/robots/LoCoBot/install/locobot_install_all.sh' > locobot_install_all.sh && chmod +x locobot_install_all.sh
 
-RUN ./locobot_install_all.sh -t full -p 3 -l interbotix
+RUN ./locobot_install_all.sh -t full -p 2 -l interbotix
 
 RUN rm locobot_install_all.sh
+
+RUN apt-get update && apt-get install -y \
+    ros-melodic-smach \
+    ros-melodic-smach-msgs \
+    ros-melodic-smach-ros \
+    ros-melodic-executive-smach \
+    ros-melodic-smach-viewer
 
