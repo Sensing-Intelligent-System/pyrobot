@@ -236,7 +236,7 @@ if [ ! -d "$LOCOBOT_FOLDER/src" ]; then
 fi
 if [ ! -d "$LOCOBOT_FOLDER/src/pyrobot" ]; then
 	cd $LOCOBOT_FOLDER/src
-	git clone https://github.com/facebookresearch/pyrobot.git
+	git clone https://github.com/Sensing-Intelligent-System/pyrobot.git
 	cd pyrobot
 	git checkout master
 	git submodule update --init --recursive
