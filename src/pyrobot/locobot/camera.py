@@ -65,7 +65,7 @@ class SimpleCamera(Camera):
         self.cam_cf = self.configs.BASE.VSLAM.RGB_CAMERA_CENTER_FRAME
         self.base_f = self.configs.BASE.VSLAM.VSLAM_BASE_FRAME
 
-    def get_current_pcd(self, in_cam=True):
+    def get_current_pcd(self, in_cam=True, use_sim=False):
         """
         Return the point cloud at current time step (one frame only)
 
@@ -84,7 +84,7 @@ class SimpleCamera(Camera):
         base2cam_trans = np.array(trans).reshape(-1, 1)
         base2cam_rot = np.array(rot)
         rgb_im, depth_im = self.get_rgb_depth()
-        pcd_in_cam, colors = self.depth_cam.get_pcd_ic(depth_im=depth_im, rgb_im=rgb_im)
+        pcd_in_cam, colors = self.depth_cam.get_pcd_ic(depth_im=depth_im, rgb_im=rgb_im, sim=use_sim)
         pts = pcd_in_cam[:3, :].T
         if in_cam:
             return pts, colors
@@ -415,7 +415,7 @@ class DepthImgProcessor:
         )
         return pts_in_cam
 
-    def get_pcd_ic(self, depth_im, rgb_im=None):
+    def get_pcd_ic(self, depth_im, rgb_im=None, sim=False):
         """
         Returns the point cloud (filtered by minimum
         and maximum depth threshold)
@@ -438,7 +438,10 @@ class DepthImgProcessor:
         # pcd in camera from depth
         depth_im = depth_im[0 :: self.subsample_pixs, 0 :: self.subsample_pixs]
         rgb_im = rgb_im[0 :: self.subsample_pixs, 0 :: self.subsample_pixs]
-        depth = depth_im.reshape(-1) / float(self.cfg_data["DepthMapFactor"])
+        if sim:
+            depth = depth_im.reshape(-1) * float(self.cfg_data["DepthMapFactor"])
+        else:
+            depth = depth_im.reshape(-1) / float(self.cfg_data["DepthMapFactor"])
         rgb = None
         if rgb_im is not None:
             rgb = rgb_im.reshape(-1, 3)

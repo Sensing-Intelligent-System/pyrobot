@@ -49,7 +49,7 @@ def main():
     vis.add_geometry(pcd)
     vis.add_geometry(coord)
     while True:
-        pts, colors = bot.camera.get_current_pcd(in_cam=False)
+        pts, colors = bot.camera.get_current_pcd(in_cam=False, use_sim=True)
         pts, colors = filter_points(pts, colors, z_lowest=args.floor_height)
         pcd.clear()
         # note that open3d.Vector3dVector is slow

@@ -106,7 +106,7 @@ def push(bot, z_lowest=0.01, gripper_length=0.10):
     if ee_pose[0][2] < 0.20:
         bot.arm.go_home()
     bot.arm.set_joint_positions([1.96, 0.52, -0.51, 1.67, 0.01], plan=False)
-    pts, colors = bot.camera.get_current_pcd(in_cam=False)
+    pts, colors = bot.camera.get_current_pcd(in_cam=False, use_sim=True)
     pts, colors = filter_points(pts, colors, z_lowest=z_lowest)
     X = pts[:, :2]
     labels, core_samples_mask = segment_objects(X)
