@@ -42,7 +42,7 @@ class MoveitInterface(object):
         rospy.init_node("pyrobot_moveit")
 
         self.moveit_server_ = actionlib.SimpleActionServer(
-            "/pyrobot/moveit_server",
+            "pyrobot/moveit_server",
             MoveitAction,
             execute_cb=self.moveit_cb,
             auto_start=False,

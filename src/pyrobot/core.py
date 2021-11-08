@@ -112,7 +112,7 @@ class Robot:
             )
         self.configs.freeze()
         try:
-            rospy.init_node("pyrobot", anonymous=True)
+            rospy.init_node("pyrobot_" + self.configs.ARM.ROBOT_NAME)
         except rospy.exceptions.ROSException:
             rospy.logwarn("ROS node [pyrobot] has already been initialized")
 
@@ -485,10 +485,10 @@ class Arm(object):
         )
 
         # Ros-Params
-        rospy.set_param("pyrobot/base_link", configs.ARM.ARM_BASE_FRAME)
-        rospy.set_param("pyrobot/gripper_link", configs.ARM.EE_FRAME)
+        rospy.set_param("/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/base_link", configs.ARM.ARM_BASE_FRAME)
+        rospy.set_param("/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/gripper_link", configs.ARM.EE_FRAME)
         rospy.set_param(
-            "pyrobot/robot_description", configs.ARM.ARM_ROBOT_DSP_PARAM_NAME
+            "/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/robot_description", configs.ARM.ARM_ROBOT_DSP_PARAM_NAME
         )
 
         # Publishers
@@ -496,13 +496,13 @@ class Arm(object):
         self._setup_joint_pub()
 
         # Services
-        self._ik_service = rospy.ServiceProxy("pyrobot/ik", IkCommand)
+        self._ik_service = rospy.ServiceProxy("/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/ik", IkCommand)
         try:
             self._ik_service.wait_for_service(timeout=3)
         except:
             rospy.logerr("Timeout waiting for Inverse Kinematics Service!!")
 
-        self._fk_service = rospy.ServiceProxy("pyrobot/fk", FkCommand)
+        self._fk_service = rospy.ServiceProxy("/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/fk", FkCommand)
         try:
             self._fk_service.wait_for_service(timeout=3)
         except:
@@ -1184,10 +1184,10 @@ class Arm(object):
         """
         Initialize moveit and setup move_group object
         """
-        rospy.set_param("pyrobot/moveit_planner", self.moveit_planner)
-        rospy.set_param("pyrobot/move_group_name", self.configs.ARM.MOVEGROUP_NAME)
+        rospy.set_param("/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/moveit_planner", self.moveit_planner)
+        rospy.set_param("/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/move_group_name", self.configs.ARM.MOVEGROUP_NAME)
         self._moveit_client = actionlib.SimpleActionClient(
-            "/pyrobot/moveit_server", MoveitAction
+            "/" + self.configs.ARM.ROBOT_NAME + "/pyrobot/moveit_server", MoveitAction
         )
 
         rospy.sleep(0.1)  # Ensures client spins up properly
