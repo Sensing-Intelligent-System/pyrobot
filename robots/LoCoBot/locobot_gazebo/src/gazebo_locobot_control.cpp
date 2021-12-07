@@ -14,15 +14,15 @@ bool isClose(const double a, const double b)
 }
 
 GazeboInteface::GazeboInteface(): node_handle_("") {
-    joint_1_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_1_cntrl/command", 10);
-    joint_2_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_2_cntrl/command", 10);
-    joint_3_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_3_cntrl/command", 10);
-    joint_4_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_4_cntrl/command", 10);
-    joint_5_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_5_cntrl/command", 10);
-    joint_6_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_6_cntrl/command", 10);
-    joint_7_pub = node_handle_.advertise < std_msgs::Float64 > ("/joint_7_cntrl/command", 10);
-    head_pan_pub = node_handle_.advertise < std_msgs::Float64 > ("/pan/command", 10);
-    head_tilt_pub = node_handle_.advertise < std_msgs::Float64 > ("/tilt/command", 10);
+    joint_1_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_1_cntrl/command", 10);
+    joint_2_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_2_cntrl/command", 10);
+    joint_3_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_3_cntrl/command", 10);
+    joint_4_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_4_cntrl/command", 10);
+    joint_5_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_5_cntrl/command", 10);
+    joint_6_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_6_cntrl/command", 10);
+    joint_7_pub = node_handle_.advertise < std_msgs::Float64 > ("joint_7_cntrl/command", 10);
+    head_pan_pub = node_handle_.advertise < std_msgs::Float64 > ("pan/command", 10);
+    head_tilt_pub = node_handle_.advertise < std_msgs::Float64 > ("tilt/command", 10);
 
     node_handle_.getParam("torque_control", torque_control_);
 
