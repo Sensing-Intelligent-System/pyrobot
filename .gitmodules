@@ -1,3 +1,3 @@
 [submodule "examples/locobot/smach-pyrobot"]
 	path = examples/locobot/smach-pyrobot
-	url = https://github.com/Sensing-Intelligent-System/smach-pyrobot.git
+	url = git@github.com:Sensing-Intelligent-System/smach-pyrobot.git
