@@ -238,7 +238,8 @@ if [ ! -d "$LOCOBOT_FOLDER/src/pyrobot" ]; then
 	cd $LOCOBOT_FOLDER/src
 	git clone https://github.com/Sensing-Intelligent-System/pyrobot.git
 	cd pyrobot
-	git checkout master
+	# git checkout master
+	git checkout devel-louis
 	git submodule update --init --recursive
   if [ $LOCOBOT_PLATFORM == "cmu" ]; then
     cd $LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot/locobot_description/urdf
