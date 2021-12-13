@@ -618,7 +618,7 @@
     <!-- Gazebo Plugins -->
     <gazebo>
         <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-            <robotNamespace>/</robotNamespace>
+            <!-- <robotNamespace>/</robotNamespace> -->
             <legacyModeNS>true</legacyModeNS>
         </plugin>
     </gazebo>
@@ -949,8 +949,8 @@
             <!--wheelAcceleration>${wheel_accel}</wheelAcceleration-->  
             <commandTopic>mobile_base/commands/velocity</commandTopic>  
             <odometryTopic>odom</odometryTopic> 
-            <odometryFrame>odom</odometryFrame> 
-            <robotBaseFrame>base_footprint</robotBaseFrame> 
+            <odometryFrame>/odom</odometryFrame> 
+            <robotBaseFrame>/base_footprint</robotBaseFrame> 
             <publishWheelJointState>true</publishWheelJointState>
         </plugin>   
         <plugin filename="libgazebo_ros_p3d.so" name="p3d_base_controller"> 
